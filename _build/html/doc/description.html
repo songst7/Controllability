@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Model Specification &#8212; Controllability</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Overview" href="overview.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Controllability</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Voxelwise bayesian analysis
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="overview.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Model Specification
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/doc/description.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/doc/description.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model1-varying-intercepts-without-covariates">
+   Model1: Varying Intercepts without Covariates
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model1-priors">
+     Model1: Priors
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model2-varying-intercepts-with-covariates">
+   Model2: Varying Intercepts with Covariates
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model2-priors">
+     Model2: Priors
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model3-varying-slopes-with-covariates">
+   Model3: Varying Slopes with Covariates
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model3-priors">
+     Model3: Priors
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model4-varying-intercepts-and-varying-slopes-with-covariates">
+   Model4: Varying Intercepts and Varying Slopes with Covariates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model4-priors">
+   Model4: Priors
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="model-specification">
+<h1>Model Specification<a class="headerlink" href="#model-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="model1-varying-intercepts-without-covariates">
+<h2>Model1: Varying Intercepts without Covariates<a class="headerlink" href="#model1-varying-intercepts-without-covariates" title="Permalink to this headline">¶</a></h2>
+<p>We can start our simplest model without any covariates. And random intercepts for participant pairs(PP), Region of Interest(ROI) and voxels(VOX) are considered.
+Then the lme4 format of model is:</p>
+<div class="math notranslate nohighlight">
+\[\Delta_{p,r,v} \sim 1 + (1\,|\,\text{PP}) + (1\,|\,\text{ROI}) + (1\,|\,\text{VOX})\]</div>
+<p>Corresponding model can be expressed as:</p>
+<p>For <span class="math notranslate nohighlight">\(p=1,2,3,...,N\)</span>, <span class="math notranslate nohighlight">\(r=1,2,3,...,m\)</span> and <span class="math notranslate nohighlight">\(v=1,2,3,...,k_{i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\Delta_{p,r,v} \sim \text{Student t}(\nu,\mu_{p,r,v},\sigma) \\
+\mu_{p,r,v} = \alpha + \alpha_{\text{PP}_{[p]}} + \alpha_{\text{ROI}_{[r]}} + \alpha_{\text{VOX}_{[v]}} + \epsilon
+\end{gathered}
+\end{split}\]</div>
+<p>Notice that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N:\)</span> Number of participant pairs</p></li>
+<li><p><span class="math notranslate nohighlight">\(m:\)</span> Number of Region of Interests</p></li>
+<li><p><span class="math notranslate nohighlight">\(k_{i}:\)</span> Number of voxel in different hemispheres of insula, where <span class="math notranslate nohighlight">\(i:\)</span> left, right;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_{p,r,v}:\)</span> Mean difference of stressor response for <span class="math notranslate nohighlight">\(p^{th}\)</span> yoked pair of participants at <span class="math notranslate nohighlight">\(v^{th}\)</span> voxel in <span class="math notranslate nohighlight">\(r^{th}\)</span> ROI;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha:\)</span> Fixed intercept;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha_{\text{PP}_{[p]}}:\)</span> Random intercept for each participant pair <span class="math notranslate nohighlight">\(p\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha_{\text{ROI}_{[r]}}:\)</span> Random intercept for each ROI <span class="math notranslate nohighlight">\(r\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha_{\text{VOX}_{v}}:\)</span> Random intercept for each voxel <span class="math notranslate nohighlight">\(v\)</span>;</p></li>
+</ul>
+<div class="section" id="model1-priors">
+<h3>Model1: Priors<a class="headerlink" href="#model1-priors" title="Permalink to this headline">¶</a></h3>
+<p>For population level:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha \sim \text{Student t}(3, 0, 10) \\
+\nu \sim \text{Gamma}(3.325, 0.1) \\
+\sigma \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts clustered by participant pairs:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{PP}} \sim \text{Student t}(\nu_{\text{PP}}, 0, \sigma_{\text{PP}}) \\
+\nu_{\text{PP}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\text{PP}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts clustered by ROI (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{ROI}} \sim \text{Student t}(\nu_{\text{ROI}}, 0, \sigma_{\alpha_{\text{ROI}}}) \\
+\nu_{\text{ROI}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\alpha_{\text{ROI}}} \sim \text{HalfStudent t}(3, 0, 10) \\
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts clustered by voxel (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{VOX}} \sim \text{Student t}(\nu_{\text{VOX}}, 0, \sigma_{\alpha_{\text{VOX}}}) \\
+\nu_{\text{VOX}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\alpha_{\text{VOX}}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="model2-varying-intercepts-with-covariates">
+<h2>Model2: Varying Intercepts with Covariates<a class="headerlink" href="#model2-varying-intercepts-with-covariates" title="Permalink to this headline">¶</a></h2>
+<p>Now we take all 5 covariates into the model. But only consider varying intercepts again. And then the model expressed in lme4 format is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\text{mod} = \text{StateMean} + \text{StateDiff} + \text{TraitMean} + \text{TraitDiff} + \text{ButtonPressDiff} \\
+\Delta_{p,r,v} \sim 1 + \text{mod} + (1\,|\,\text{PP}) + (1\,|\,\text{ROI}) + (1\,|\,\text{VOX})
+\end{gathered}
+\end{split}\]</div>
+<p>Corresponding model then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\Delta_{p,r,v} \sim \text{Student t}(\nu,\mu_{p,r,v},\sigma) \\
+\mu_{p,r,v} = \alpha + \alpha_{\text{PP}_{[p]}} + \alpha_{\text{ROI}_{[r]}} + \alpha_{\text{VOX}_{[v]}} + \beta\times\text{mod} + \epsilon
+\end{gathered}
+\end{split}\]</div>
+<p>Notice that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta:\)</span> Fixed Slope</p></li>
+</ul>
+<p>We can also write above equation specifically as followed:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mu_{p,r,v} = &amp; \alpha + \alpha_{\text{PP}_{[p]}} + \alpha_{\text{ROI}_{[r]}} + \alpha_{\text{VOX}_{[v]}} + \\
+              &amp; \beta_{\text{StateMean}}\text{StateMean} + \beta_{\text{StateDiff}}\text{StateDiff} + \\
+              &amp; \beta_{\text{TraitMean}}\text{TraitMean} + \beta_{\text{TraitDiff}}\text{TraitDiff} + \\
+              &amp; \beta_{\text{ButtonPressDiff}}\text{ButtonPressDiff} + \epsilon
+\end{aligned}
+\end{split}\]</div>
+<div class="section" id="model2-priors">
+<h3>Model2: Priors<a class="headerlink" href="#model2-priors" title="Permalink to this headline">¶</a></h3>
+<p>The priors of same coefficients are inherited from Model 1. In addition, the following priors are employed:</p>
+<p>For population level:</p>
+<div class="math notranslate nohighlight">
+\[\beta \sim \text{Student t}(3, 0, 10)\]</div>
+</div>
+</div>
+<div class="section" id="model3-varying-slopes-with-covariates">
+<h2>Model3: Varying Slopes with Covariates<a class="headerlink" href="#model3-varying-slopes-with-covariates" title="Permalink to this headline">¶</a></h2>
+<p>Next, we consider varying slopes for all 5 covariates and varying intercept for participant pair only. The lme4 format of the model is:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_{p,r,v} \sim 1 + \text{mod} + (1\,|\,\text{PP}) + (\text{mod}\,|\,\text{ROI}) + (\text{mod}\,|\,\text{VOX})
+\]</div>
+<p>Corresponding model then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\Delta_{p,r,v} \sim \text{Student t}(\nu,\mu_{p,r,v},\sigma) \\
+\mu_{p,r,v} = \alpha + \alpha_{\text{PP}_{[p]}} + (\beta + \gamma_{\text{ROI}_{[r]}} + \eta_{\text{VOX}_{[v]}})\,\text{mod} + \epsilon
+\end{gathered}
+\end{split}\]</div>
+<p>Notice that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma_{\text{ROI}_{[r]}}:\)</span> Random slope for each ROI <span class="math notranslate nohighlight">\(r\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\eta_{\text{VOX}_{[v]}}:\)</span> Random slope for each voxel <span class="math notranslate nohighlight">\(v\)</span>;</p></li>
+</ul>
+<p>We can also write above equation specifically as followed:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mu_{p,r,v} = &amp; \alpha + \alpha_{\text{PP}_{[p]}} +\\
+              &amp; \beta_{\text{StateMean}}\text{StateMean} + \gamma_{\text{StateMean},[r]}\text{StateMean} + \eta_{\text{StateMean},[v]}\text{StateMean} + \\
+              &amp; \beta_{\text{StateDiff}}\text{StateDiff} + \gamma_{\text{StateDiff},[r]}\text{StateDiff} + \eta_{\text{StateDiff},[v]}\text{StateDiff} + \\
+              &amp; \beta_{\text{TraitMean}}\text{TraitMean} + \gamma_{\text{TraitMean},[r]}\text{TraitMean} + \eta_{\text{TraitMean},[v]}\text{TraitMean} + \\
+              &amp; \beta_{\text{TraitDiff}}\text{TraitDiff} + \gamma_{\text{TraitDiff},[r]}\text{TraitDiff} + \eta_{\text{TraitDiff},[v]}\text{TraitDiff} + \\
+              &amp; \beta_{\text{ButtonPressDiff}}\text{ButtonPressDiff} + \gamma_{\text{ButtonPressDiff},[r]}\text{ButtonPressDiff} + \\
+              &amp; \eta_{\text{ButtonPressDiff},[v]}\text{ButtonPressDiff} + \epsilon
+\end{aligned}
+\end{split}\]</div>
+<div class="section" id="model3-priors">
+<h3>Model3: Priors<a class="headerlink" href="#model3-priors" title="Permalink to this headline">¶</a></h3>
+<p>Besides to prior defined in Model 1 and Model 2, the following priors are also introduced:</p>
+<p>For slopes clustered by ROI (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\gamma_{\text{ROI}_{[r]}} \sim \text{Student t}(\nu_{\text{ROI}}, 0, \sigma_{\gamma_{\text{ROI}}}) \\
+\sigma_{\gamma_{\text{ROI}}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For slopes clusterd by voxel (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\eta_{\text{VOX}_{[v]}} \sim \text{Student t}(\nu_{\text{VOX}}, 0, \sigma_{\eta_{\text{VOX}}}) \\
+\sigma_{\eta_{\text{Vox}}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="model4-varying-intercepts-and-varying-slopes-with-covariates">
+<h2>Model4: Varying Intercepts and Varying Slopes with Covariates<a class="headerlink" href="#model4-varying-intercepts-and-varying-slopes-with-covariates" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we take both varying intercepts and varying slopes into consideration. The lme4 format of the full model is:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_{p,r,v} \sim 1 + \text{mod} + (1\,|\,\text{PP}) + (1 + \text{mod}\,|\,\text{ROI}) + (1 + \text{mod}\,|\,\text{VOX})
+\]</div>
+<p>Full model then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\Delta_{p,r,v} \sim \text{Student t}(\nu,\mu_{p,r,v},\sigma)\\
+\mu_{p,r,v} = \alpha + \alpha_{\text{PP}_{[p]}} + \alpha_{\text{ROI}_{[r]}} + \alpha_{\text{VOX}_{[v]}} + 
+              (\beta + \gamma_{\text{ROI}_{[r]}} + \eta_{\text{VOX}_{[v]}})\,\text{mod} + \epsilon
+\end{gathered}
+\end{split}\]</div>
+<p>We can also write above equation specifically as followed:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mu_{p,r,v} = &amp; \alpha + \alpha_{\text{PP}_{[p]}} + \alpha_{\text{ROI}_{[r]}} + \alpha_{\text{VOX}_{[v]}} + \\
+              &amp; \beta_{\text{StateMean}}\text{StateMean} + \gamma_{\text{StateMean},[r]}\text{StateMean} + \eta_{\text{StateMean},[v]}\text{StateMean} + \\
+              &amp; \beta_{\text{StateDiff}}\text{StateDiff} + \gamma_{\text{StateDiff},[r]}\text{StateDiff} + \eta_{\text{StateDiff},[v]}\text{StateDiff} + \\
+              &amp; \beta_{\text{TraitMean}}\text{TraitMean} + \gamma_{\text{TraitMean},[r]}\text{TraitMean} + \eta_{\text{TraitMean},[v]}\text{TraitMean} + \\
+              &amp; \beta_{\text{TraitDiff}}\text{TraitDiff} + \gamma_{\text{TraitDiff},[r]}\text{TraitDiff} + \eta_{\text{TraitDiff},[v]}\text{TraitDiff} + \\
+              &amp; \beta_{\text{ButtonPressDiff}}\text{ButtonPressDiff} + \gamma_{\text{ButtonPressDiff},[r]}\text{ButtonPressDiff} + \\
+              &amp; \eta_{\text{ButtonPressDiff},[v]}\text{ButtonPressDiff} + \epsilon
+\end{aligned}
+\end{split}\]</div>
+</div>
+<div class="section" id="model4-priors">
+<h2>Model4: Priors<a class="headerlink" href="#model4-priors" title="Permalink to this headline">¶</a></h2>
+<p>Here we rewrite all priors for the coefficients. Notice that now both <span class="math notranslate nohighlight">\(\alpha_{\text{ROI}_{[r]}}\)</span>, <span class="math notranslate nohighlight">\(\gamma_{\text{ROI}_{[r]}}\)</span> and <span class="math notranslate nohighlight">\(\alpha_{\text{VOX}_{[v]}}\)</span>,
+<span class="math notranslate nohighlight">\(\gamma_{\text{VOX}_{[v]}}\)</span> are followed in joint distributions correspondingly. Hence, two variance-covariance matrix are introduced:</p>
+<p>For population level:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha \sim \text{Student t}(3, 0, 10) \\
+\beta \sim \text{Student t}(3, 0, 10) \\
+\nu \sim \text{Gamma}(3.325, 0.1) \\
+\sigma \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts clustered by participant pairs:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{PP}_{[p]}} \sim \text{Student t}(\nu_{\text{PP}}, 0, \sigma_{\text{PP}}) \\
+\nu_{\text{PP}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\text{PP}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts and slopes clustered by ROI (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{ROI}_{[r]}} \sim \text{Student t}(\nu_{\text{ROI}}, 0, \sigma_{\alpha_{\text{ROI}}}) \\
+\gamma_{\text{ROI}_{[r]}} \sim \text{Student t}(\nu_{\text{ROI}}, 0, \sigma_{\gamma_{\text{ROI}}}) \\
+\nu_{\text{ROI}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\alpha_{\text{ROI}}} \sim \text{HalfStudent t}(3, 0, 10) \\
+\sigma_{\gamma_{\text{ROI}}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For intercepts and slopes clustered by voxel (Marginal):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\alpha_{\text{VOX}_{[v]}} \sim \text{Student t}(\nu_{\text{VOX}}, 0, \sigma_{\alpha_{\text{VOX}}}) \\
+\eta_{\text{VOX}_{[v]}} \sim \text{Student t}(\nu_{\text{VOX}}, 0, \sigma_{\eta_{\text{VOX}}}) \\
+\nu_{\text{VOX}} \sim \text{Gamma}(3.325, 0.1) \\
+\sigma_{\alpha_{\text{VOX}}} \sim \text{HalfStudent t}(3, 0, 10) \\
+\sigma_{\eta_{\text{VOX}}} \sim \text{HalfStudent t}(3, 0, 10)
+\end{gathered}
+\end{split}\]</div>
+<p>For correlation structures in both ROI and voxel, let <span class="math notranslate nohighlight">\(j:\,\gamma_{\text{ROI}},\,\eta_{\text{VOX}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{S}\)</span> be the variance-covariance matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gathered}
+\mathbf{\Sigma} = \begin{bmatrix}
+                  \sigma_{\alpha_{j}} &amp;   &amp;   &amp;   &amp;   &amp;   \\
+                  &amp;\sigma_{j_{\text{ StateMean}}} &amp;   &amp;   &amp;   &amp;   \\
+                  &amp;   &amp;\sigma_{j_{\text{ StateDiff}}} &amp;    &amp;   &amp;   \\
+                  &amp;   &amp;   &amp;\sigma_{j_{\text{ TraitMean}}}   &amp;   &amp;   \\
+                  &amp;   &amp;   &amp;   &amp;\sigma_{j_{\text{ TraitDiff}}}   &amp;   \\
+                  &amp;   &amp;   &amp;   &amp;   &amp;\sigma_{j_{\text{ ButtonPressDiff}}}
+                  \end{bmatrix} \\
+\mathbf{S} = \mathbf{\Sigma}\mathbf{R}\mathbf{\Sigma} \\
+\mathbf{R} \sim \text{LKJcorr(2)} \\
+\end{gathered}
+\end{split}\]</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./doc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="overview.html" title="previous page">Overview</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Songtao Song<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

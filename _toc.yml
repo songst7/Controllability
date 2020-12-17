@@ -1,0 +1,9 @@
+# Table of content
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+- file: doc/intro
+
+- part: Voxelwise bayesian analysis
+  chapters:
+  - file: doc/overview
+  - file: doc/description
